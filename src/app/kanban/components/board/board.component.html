@@ -6,10 +6,38 @@
       style="height: 80vh;">
       <h3 class="d-flex justify-content-center border-bottom">{{ column.title }}</h3>
       <div *ngIf="column.status === 'todo'">
-        form
+        <form [formGroup]="taskForm" (ngSubmit)="onSubmit()" class="p-3">
+          <div class="mb-3">
+            <label for="title" class="form-label">Task Title</label>
+            <input
+              type="text"
+              id="title"
+              formControlName="title"
+              class="form-control"
+              placeholder="Enter task title"
+            />
+            <div *ngIf="taskForm.get('title')?.touched && taskForm.get('title')?.invalid" class="text-danger mt-1">
+              Title is required
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary" [disabled]="taskForm.invalid">
+            {{isTaskBeingUpdated ? 'Update Task' : '+ Add Task'}}
+          </button>
+        </form>
       </div>
-      <div *ngFor="let task of column.tasks | async">
-       {{task.title}}
+      <div
+        cdkDropList
+        [id]="column.status"
+        [cdkDropListData]="column.tasks"
+        [cdkDropListConnectedTo]="getConnectedLists(column.status)"
+        (cdkDropListDropped)="onTaskDropped($event)">
+        <div *ngFor="let task of column.tasks | async" cdkDrag [cdkDragData]="task">
+          <app-task-card
+            [task]="task"
+            (updateTask)="updateTask($event)"
+            (deleteTask)="deleteTask($event)"
+          ></app-task-card>
+        </div>
       </div>
     </div>
   </div>
