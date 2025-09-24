@@ -1,1 +1,17 @@
-<p>board works!</p>
+<div>
+  <div class="d-flex justify-content-between">
+    <div
+      *ngFor="let column of columns"
+      class="col border"
+      style="height: 80vh;">
+      <h3 class="d-flex justify-content-center border-bottom">{{ column.title }}</h3>
+      <div *ngIf="column.status === 'todo'">
+        form
+      </div>
+      <div *ngFor="let task of column.tasks | async">
+       {{task.title}}
+      </div>
+    </div>
+  </div>
+</div>
+

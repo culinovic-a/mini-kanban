@@ -16,5 +16,19 @@
       "loadingPriority": false,
       "errorPriority": false
     }
+  ],
+  "priority": [
+    {
+      "id": 1,
+      "level": "Low"
+    },
+    {
+      "id": 2,
+      "level": "Medium"
+    },
+    {
+      "id": 3,
+      "level": "High"
+    }
   ]
 }
